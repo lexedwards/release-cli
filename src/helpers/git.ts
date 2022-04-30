@@ -11,6 +11,11 @@ export async function getGitURL(): Promise<string> {
   return cmd.stdout.trim();
 }
 
+export async function getGitCommit(): Promise<string> {
+  const cmd = await asyncExec(`git log -1 --pretty=%B`);
+  return cmd.stdout.trim();
+}
+
 export async function getCurrentBranch(): Promise<string> {
   const cmd = await asyncExec('git branch --show-current');
   return cmd.stdout.trim();

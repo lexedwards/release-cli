@@ -1,6 +1,7 @@
 import lint from '@commitlint/lint';
 import { rules } from '@commitlint/config-conventional';
 import logger from '~/src/logger';
+import { getGitCommit } from '../helpers';
 
 export function printExampleCommit() {
   logger.log(`Valid Commit Examples:
@@ -14,13 +15,14 @@ chore(deps): update dependencies
 `);
 }
 
-export async function lintCommit(value: string) {
-  logger.info(`Linter`, `Validating: "${value}"`);
+export async function lintCommit(value?: string) {
+  let commitMessage = value || (await getGitCommit());
   try {
-    if (!value) {
+    if (!commitMessage) {
       throw new Error(`Passed an empty commit`);
     }
-    const report = await lint(value, rules);
+    logger.info(`Linter`, `Validating: "${commitMessage}"`);
+    const report = await lint(commitMessage, rules);
     if (!report.valid) {
       logger.error(
         `Failed linting rules`,

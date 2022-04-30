@@ -9,7 +9,23 @@ export async function setNpmToken(token?: string): Promise<void> {
     );
     if (stderr) throw stderr;
   } catch (error) {
-    console.log(error);
+    logger.error(
+      `There was an error setting Npm Authorization Token`,
+      deepLog(error)
+    );
+    return Promise.reject(error);
+  }
+}
+
+export async function createNpmPackage(): Promise<string> {
+  try {
+    const { stdout } = await asyncExec(`npm pack`);
+    return stdout.trim();
+  } catch (error) {
+    logger.error(
+      `There was an error creating a Npm release package`,
+      deepLog(error)
+    );
     return Promise.reject(error);
   }
 }
@@ -18,7 +34,7 @@ export async function npmPublish() {
   try {
     const { stdout, stderr } = await asyncExec('npm publish');
     if (stderr) throw stderr;
-    return stdout;
+    return stdout.trim();
   } catch (error) {
     logger.error(
       `There was an error publishing the Npm Package`,
