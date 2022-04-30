@@ -1,6 +1,6 @@
 {
   "name": "@lexedwards/release-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A library to help automate package versioning, changelogs, and publishing",
   "private": false,
   "source": "src/index.ts",
@@ -33,7 +33,7 @@
     "./dist"
   ],
   "keywords": [],
-  "author": "",
+  "author": "Alex Edwards <alex@alexemdwards.co> (https://alexedwards.co/)",
   "license": "ISC",
   "dependencies": {
     "@commitlint/config-conventional": "^16.2.1",
