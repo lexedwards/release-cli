@@ -1,5 +1,5 @@
 import { asyncExec } from './asyncExec';
-import logger from '../logger';
+import logger, { deepLog } from '../logger';
 
 export async function getGitTag(): Promise<string> {
   const cmd = await asyncExec('git describe --tags --abbrev=0');
@@ -45,11 +45,18 @@ export async function getGitInformation() {
 }
 
 export async function gitPushWithTags() {
-  const currentBranch = await getCurrentBranch();
-  logger.info(
-    'Git Push',
-    `Warning, pushing to ${currentBranch} including tags`
-  );
-  const cmd = await asyncExec(`git push --follow-tags origin ${currentBranch}`);
-  return cmd.stdout.trim();
+  try {
+    const currentBranch = await getCurrentBranch();
+    logger.info(
+      'Pushing updated to repo',
+      `Warning, pushing to ${currentBranch} including tags`
+    );
+    const { stdout } = await asyncExec(
+      `git push --follow-tags origin ${currentBranch}`
+    );
+    return stdout.trim();
+  } catch (error) {
+    logger.error(`Error pushing to remote repository`, deepLog(error));
+    return Promise.reject(error);
+  }
 }
