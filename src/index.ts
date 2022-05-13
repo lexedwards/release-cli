@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import process from 'process';
+import process from 'node:process';
 import pkg from '../package.json';
 import { lintCommit } from './commands/lint';
 import { release } from './commands/release';

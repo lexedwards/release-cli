@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { inspect } from 'node:util';
+import { env } from 'node:process';
 import pkg from '~/package.json';
 
 export function deepLog(data: unknown) {
@@ -51,7 +52,8 @@ function success(context: string, ...data: unknown[]) {
   }
 }
 function debug(...data: unknown[]) {
-  if (!process.env.DEBUG) return;
+  const { DEBUG } = env;
+  if (DEBUG !== 'TRUE') return;
   console.log('');
   for (const info of data) {
     console.log(logStyle(info));
