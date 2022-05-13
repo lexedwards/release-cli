@@ -47,7 +47,7 @@ export async function searchReleases(pkgName: string) {
     const { stdout } = await asyncExec(`npm search ${pkgName} --json`);
     const npmOutput: Array<NpmPackageSearch> = JSON.parse(stdout.trim());
     const exactPackage = npmOutput.find((pkg) => pkg.name === pkgName);
-    return exactPackage || Promise.reject(`${pkgName} not found`);
+    return exactPackage || null;
   } catch (error) {
     logger.error(
       `There was an error searching npm for ${pkgName}`,
@@ -76,10 +76,11 @@ export async function getPackageName() {
 export async function isFirstRelease() {
   try {
     const pkgName = await getPackageName();
-    await searchReleases(pkgName);
-    return false;
+    const npmReleases = await searchReleases(pkgName);
+    return npmReleases ? false : true;
   } catch (error) {
-    return true;
+    logger.error('There was an error getting npm releases', deepLog(error));
+    return Promise.reject(error);
   }
 }
 
@@ -130,10 +131,10 @@ export async function npmPublish(NPM_TOKEN?: string, dryRun?: boolean) {
     const { stdout } = await asyncExec(
       `npm publish --json ${dryRun ? `--dry-run` : ''}`
     );
-    let outputIdentifier = `{
+    const outputIdentifier = `{
   "id":`;
-    let outputStartPos = stdout.search(outputIdentifier);
-    let outputObject = stdout.slice(outputStartPos);
+    const outputStartPos = stdout.search(outputIdentifier);
+    const outputObject = stdout.slice(outputStartPos);
     const output: NpmPublishSuccess = JSON.parse(outputObject);
     logger.success(
       'Npm Package Published',
