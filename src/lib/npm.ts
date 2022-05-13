@@ -128,9 +128,9 @@ export async function npmPublish(NPM_TOKEN?: string, dryRun?: boolean) {
   try {
     await setNpmToken(NPM_TOKEN);
     const { stdout } = await asyncExec(
-      `npm publish --json${dryRun ? ` --dry-run` : ''}`
+      `npm publish --json ${dryRun ? `--dry-run` : ''}`
     );
-    const output: NpmPublishSuccess = JSON.parse(stdout);
+    const output: NpmPublishSuccess = JSON.parse(stdout.trim());
     logger.success(
       'Npm Package Published',
       `Package: ${output.name} v${output.version}`,
