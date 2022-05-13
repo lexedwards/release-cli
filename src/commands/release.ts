@@ -1,5 +1,10 @@
 import sv from 'standard-version';
-import { gitPushWithTags, npmPublish, createNpmPackage } from '~/src/helpers';
+import {
+  gitPushWithTags,
+  npmPublish,
+  createNpmPackage,
+  isFirstRelease,
+} from '~/src/helpers';
 import { createGithubRelease, GithubOptions } from '../lib';
 export interface ReleaseOptions {
   dryRun?: boolean;
@@ -16,7 +21,9 @@ export async function release({
   NPM_TOKEN,
   github_access,
 }: ReleaseOptions) {
+  const firstRelease = await isFirstRelease();
   await sv({
+    firstRelease,
     dryRun,
     types: [
       { type: 'feat', section: 'Features' },

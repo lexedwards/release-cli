@@ -1,3 +1,5 @@
+import { existsSync } from 'fs';
+import { readFile } from 'fs/promises';
 import { asyncExec, bytesToHuman, isChildProcessError } from '../helpers';
 import logger, { deepLog } from '../logger';
 
@@ -14,6 +16,70 @@ export async function setNpmToken(token?: string) {
       deepLog(error)
     );
     return Promise.reject(error);
+  }
+}
+
+interface NpmPackageSearch {
+  name: string;
+  scope: string;
+  version: string;
+  description: string;
+  links: {
+    npm: string;
+  };
+  author: {
+    name: string;
+    email: string;
+    url: string;
+  };
+  publisher: {
+    username: string;
+    email: string;
+  };
+  maintainers: Array<{
+    username: string;
+    email: string;
+  }>;
+}
+
+export async function searchReleases(pkgName: string) {
+  try {
+    const { stdout } = await asyncExec(`npm search ${pkgName} --json`);
+    const npmOutput: Array<NpmPackageSearch> = JSON.parse(stdout.trim());
+    logger.info('Npm Search Results', npmOutput);
+    const exactPackage = npmOutput.find((pkg) => pkg.name === pkgName);
+    return exactPackage || Promise.reject(`${pkgName} not found`);
+  } catch (error) {
+    logger.error(
+      `There was an error searching npm for ${pkgName}`,
+      deepLog(error)
+    );
+    return Promise.reject(error);
+  }
+}
+
+export async function getPackageName() {
+  const filePath = `./package.json`;
+  try {
+    if (existsSync(filePath)) {
+      const file = await readFile(filePath, { encoding: 'utf8' });
+      return JSON.parse(file).name as string;
+    } else {
+      throw new Error('Package.json can not be found');
+    }
+  } catch (error) {
+    logger.error(`There was a problem reading root dir's package.json`);
+    return Promise.reject(error);
+  }
+}
+
+export async function isFirstRelease() {
+  try {
+    const pkgName = await getPackageName();
+    await searchReleases(pkgName);
+    return false;
+  } catch (error) {
+    return true;
   }
 }
 
