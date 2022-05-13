@@ -1,29 +1,29 @@
-import { asyncExec } from './asyncExec';
+import { asyncExec } from '../helpers';
 import logger, { deepLog } from '../logger';
 
-export async function getGitTag(): Promise<string> {
+export async function getGitTag() {
   const cmd = await asyncExec('git describe --tags --abbrev=0');
   return cmd.stdout.trim();
 }
 
-export async function getGitURL(): Promise<string> {
+export async function getGitURL() {
   const cmd = await asyncExec('git ls-remote --get-url');
   return cmd.stdout.trim();
 }
 
-export async function getGitCommit(): Promise<string> {
+export async function getGitCommit() {
   const cmd = await asyncExec(`git log -1 --pretty=%B`);
   return cmd.stdout.trim();
 }
 
-export async function getCurrentBranch(): Promise<string> {
+export async function getCurrentBranch() {
   const cmd = await asyncExec('git branch --show-current');
   return cmd.stdout.trim();
 }
 
 export function splitRepoURL(url: string) {
   const matcher = url.match(/:.*\./g);
-  if (!matcher?.length) {
+  if (!matcher?.length || matcher.length < 2) {
     throw new Error('URL for repo did not match expected pattern');
   }
   const splits = matcher[0].replaceAll(':', '').replaceAll('//', '').split('/');

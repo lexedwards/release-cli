@@ -1,8 +1,7 @@
-import { asyncExec, isChildProcessError } from './asyncExec';
+import { asyncExec, bytesToHuman, isChildProcessError } from '../helpers';
 import logger, { deepLog } from '../logger';
-import { bytesToHuman } from './bytesToHuman';
 
-export async function setNpmToken(token?: string): Promise<void> {
+export async function setNpmToken(token?: string) {
   if (!token) return;
   try {
     const { stderr } = await asyncExec(
@@ -18,7 +17,7 @@ export async function setNpmToken(token?: string): Promise<void> {
   }
 }
 
-export async function createNpmPackage(): Promise<string> {
+export async function createNpmPackage() {
   try {
     const { stdout, stderr } = await asyncExec(`npm pack --json`);
     logger.info(`Npm Package`, stderr);
