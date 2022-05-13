@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.8](https://github.com/lexedwards/release-cli/compare/v2.2.7...v2.2.8) (2022-05-13)
+
+
+### Other Changes
+
+* error logging on bootstrap ([c67516d](https://github.com/lexedwards/release-cli/commit/c67516d6bec7d5fb7004683adfc7da2ee0789d88))
+
 ### [2.2.7](https://github.com/lexedwards/release-cli/compare/v2.2.6...v2.2.7) (2022-05-13)
 
 
