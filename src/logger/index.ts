@@ -50,6 +50,13 @@ function success(context: string, ...data: unknown[]) {
     console.log(logStyle(info));
   }
 }
+function debug(...data: unknown[]) {
+  if (!process.env.DEBUG) return;
+  console.log('');
+  for (const info of data) {
+    console.log(logStyle(info));
+  }
+}
 
 export default {
   log,
@@ -57,4 +64,5 @@ export default {
   info,
   error,
   success,
+  debug,
 };

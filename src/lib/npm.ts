@@ -58,13 +58,16 @@ export async function searchReleases(pkgName: string) {
 }
 
 export async function getPackageName() {
+  logger.debug('getting package name');
   const filePath = `./package.json`;
   try {
     if (existsSync(filePath)) {
       const file = await readFile(filePath, { encoding: 'utf8' });
       const pkgJson = JSON.parse(file);
+      logger.debug('package contents', deepLog(pkgJson));
       return pkgJson.name as string;
     } else {
+      logger.debug('package.json not found');
       throw new Error('Package.json can not be found');
     }
   } catch (error) {

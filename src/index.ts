@@ -15,7 +15,9 @@ async function bootstrap() {
 
   program
     .command('release')
-    .description('Create a Changelog and optionally release packages')
+    .description(
+      'Create a Changelog and optionally release packages, run with DEBUG=TRUE ... to get verbose logging'
+    )
     .option(
       '--npm',
       'Release to Npm - An authorized user or "NPM_TOKEN" required in envs'

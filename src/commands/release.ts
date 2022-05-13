@@ -6,6 +6,7 @@ import {
   isFirstRelease,
 } from '~/src/helpers';
 import { createGithubRelease, GithubOptions } from '../lib';
+import logger from '../logger';
 export interface ReleaseOptions {
   dryRun?: boolean;
   npm?: boolean;
@@ -21,7 +22,9 @@ export async function release({
   NPM_TOKEN,
   github_access,
 }: ReleaseOptions) {
+  logger.debug('starting release command');
   const firstRelease = await isFirstRelease();
+  logger.debug(`is first release?: ${firstRelease}`);
   await sv({
     firstRelease,
     dryRun,
