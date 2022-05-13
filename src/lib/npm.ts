@@ -130,7 +130,11 @@ export async function npmPublish(NPM_TOKEN?: string, dryRun?: boolean) {
     const { stdout } = await asyncExec(
       `npm publish --json ${dryRun ? `--dry-run` : ''}`
     );
-    const output: NpmPublishSuccess = JSON.parse(stdout.trim());
+    let outputIdentifier = `{
+      "id":`;
+    let outputStartPos = stdout.search(outputIdentifier);
+    let outputObject = stdout.slice(outputStartPos);
+    const output: NpmPublishSuccess = JSON.parse(outputObject.trim());
     logger.success(
       'Npm Package Published',
       `Package: ${output.name} v${output.version}`,
