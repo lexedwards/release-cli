@@ -1,6 +1,6 @@
 {
   "name": "@lexedwards/release-cli",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "A library to help automate package versioning, changelogs, and publishing",
   "private": false,
   "source": "src/index.ts",
