@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/lexedwards/release-cli/compare/v2.1.0...v2.2.0) (2022-05-13)
+
+
+### Features
+
+* **release:** check for releases ([d6413d7](https://github.com/lexedwards/release-cli/commit/d6413d75c43273e6edf2d0a5c12aeac964db1d54))
+
+
+### Bug Fixes
+
+* git url parsing ([372c863](https://github.com/lexedwards/release-cli/commit/372c86349e1fac65484a1d079847db22f7843484))
+
 ## [2.1.0](https://github.com/lexedwards/release-cli/compare/v2.0.2...v2.1.0) (2022-04-30)
 
 
