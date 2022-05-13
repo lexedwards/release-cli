@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { program } from 'commander';
 import process from 'process';
 import pkg from '../package.json';
@@ -17,7 +16,10 @@ async function bootstrap() {
   program
     .command('release')
     .description(
-      'Create a Changelog and optionally release packages, run with DEBUG=TRUE ... to get verbose logging'
+      `Create a Changelog and optionally release packages, run with DEBUG=TRUE ... to get verbose logging
+      
+${Boolean(process.env.DEBUG) ? 'DEBUG MODE ON!' : 'DEBUG MODE OFF'}
+`
     )
     .option(
       '--npm',

@@ -6,7 +6,6 @@ const cliName = Object.keys(pkg.bin)[0];
 
 export const helpSufix = `
 ${logStyle.bold(`Example Usage:`)}
-
 ${cliName} release --github # Release to Github
 ${cliName} release --npm # Release to Npm
 ${cliName} release --github --npm # Release to both
