@@ -5,6 +5,7 @@ import pkg from '../package.json';
 import { lintCommit } from './commands/lint';
 import { release } from './commands/release';
 import { helpPrefix, helpSufix } from './helpers';
+import logger, { deepLog } from './logger';
 
 async function bootstrap() {
   process.title = 'Release CLI';
@@ -45,6 +46,7 @@ async function bootstrap() {
   try {
     await program.parseAsync(process.argv);
   } catch (error) {
+    logger.error(`A problem happened in the application`, deepLog(error));
     process.exit(1);
   }
 }
