@@ -46,7 +46,6 @@ export async function searchReleases(pkgName: string) {
   try {
     const { stdout } = await asyncExec(`npm search ${pkgName} --json`);
     const npmOutput: Array<NpmPackageSearch> = JSON.parse(stdout.trim());
-    logger.info('Npm Search Results', npmOutput);
     const exactPackage = npmOutput.find((pkg) => pkg.name === pkgName);
     return exactPackage || Promise.reject(`${pkgName} not found`);
   } catch (error) {
@@ -63,7 +62,8 @@ export async function getPackageName() {
   try {
     if (existsSync(filePath)) {
       const file = await readFile(filePath, { encoding: 'utf8' });
-      return JSON.parse(file).name as string;
+      const pkgJson = JSON.parse(file);
+      return pkgJson.name as string;
     } else {
       throw new Error('Package.json can not be found');
     }

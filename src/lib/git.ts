@@ -23,7 +23,7 @@ export async function getCurrentBranch() {
 
 export function splitRepoURL(url: string) {
   const matcher = url.match(/:.*\./g);
-  if (!matcher?.length || matcher.length < 2) {
+  if (!matcher?.length) {
     throw new Error('URL for repo did not match expected pattern');
   }
   const splits = matcher[0].replaceAll(':', '').replaceAll('//', '').split('/');
