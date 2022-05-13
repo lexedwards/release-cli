@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.9](https://github.com/lexedwards/release-cli/compare/v2.2.8...v2.2.9) (2022-05-13)
+
+
+### Other Changes
+
+* arranged dotenv differently ([2643bf2](https://github.com/lexedwards/release-cli/commit/2643bf215d30f1c6ce9a6062f82f517ae1fb0757))
+
 ### [2.2.8](https://github.com/lexedwards/release-cli/compare/v2.2.7...v2.2.8) (2022-05-13)
 
 
